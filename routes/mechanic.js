@@ -23,6 +23,9 @@ router.put('/cancelorder/:orderid',mechanicauth,mechanicController.cancelorder)
 router.put('/completedorder/:orderid',mechanicauth,mechanicController.completedorder)
 
 
+//get feedback
+router.get('/feedback',  mechanicController.feedback);
+
 
 
 

@@ -105,8 +105,17 @@ const completedorder = async (req, res) => {
 };
 
 
+const feedback = async (req, res) => {
+  try {
+    const mechanicid = req.mechanic.id;
+    const feedbacks = await Feedback.find({ mechanicId: mechanicid });
+    res.json({ feedbacks: feedbacks });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+};
 
 
 
-
-module.exports = { getorder, orderhistory, getprofile, approveorder, cancelorder, completedorder };
+module.exports = { getorder, orderhistory, getprofile, approveorder, cancelorder, completedorder,feedback };

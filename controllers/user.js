@@ -154,8 +154,8 @@ res.json(orderHistory);
 
  const feedback = async (req, res) => {
   try {
-    const mechanicId = req.params.id;
-    const feedbacks = await Feedback.find({ mechanicId: mechanicId });
+    const userid = req.user.id;
+    const feedbacks = await Feedback.find({ userId: userid });
     res.json({ feedbacks: feedbacks });
   } catch (error) {
     console.error(error.message);
