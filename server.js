@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const swaggerUi = require('swagger-ui-express')
 const YAML = require('yamljs');
-const swaggerJsDocs = YAML.load("./api.yaml");
+const path = require('path');
+const swaggerJsDocs = YAML.load(path.join(__dirname, 'config', 'api.yaml'));
 
 
 
