@@ -8,17 +8,16 @@ const path = require('path');
 const swaggerJsDocs = YAML.load(path.join(__dirname, 'config', 'api.yaml'));
 
 
-
 const app = express()
 
 app.use(express.json())
 app.use(cors())
 
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDocs));
 app.get('/',(req,res)=>{
   res.send("WELLCOME TO MECHANIC SYSTEM goes to url/api-docs/ for swagger doc")
 })
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDocs));
 
 
 app.use('/api/auth',require('./routes/auth'))
