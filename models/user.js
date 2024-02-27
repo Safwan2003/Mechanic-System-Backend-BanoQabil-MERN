@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
 
     avatar:{
         type: String, //cloudinary url,
-        required: true,
+        // required: true,
     },
     email: {
         type: String,
