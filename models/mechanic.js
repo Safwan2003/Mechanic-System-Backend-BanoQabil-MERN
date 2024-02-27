@@ -18,7 +18,7 @@ const mechanicSchema = mongoose.Schema({
     },
     avatar: {
         type: String, // Assuming you will store the URL of the image in Cloudinary
-        required: true
+        // required: true
     },
     name: {
         type: String,
