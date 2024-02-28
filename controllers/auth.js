@@ -33,7 +33,7 @@ const userregister = async (req, res) => {
 
         // Upload avatar to Cloudinary
         const avatar = await uploadOnCloudinary(req.file.path);
-        if (!avatar) {
+        if (!avatar || !avatar.url) {
             return res.status(500).json({ msg: "Failed to upload avatar" });
         }
 
@@ -41,7 +41,7 @@ const userregister = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create new user object
+        // Create new user object with avatar URL
         user = new User({
             userName,
             email,
