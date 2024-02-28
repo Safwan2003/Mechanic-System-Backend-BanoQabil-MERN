@@ -17,7 +17,7 @@ const userregister = async (req, res) => {
         return res.status(400).json({ errors: result.array() });
     }
 
-    const { userName, email, password, phoneNumber } = req.body;
+    const { userName, email, password, phoneNumber,avatar } = req.body;
 
     try {
         // Check if user with email already exists
