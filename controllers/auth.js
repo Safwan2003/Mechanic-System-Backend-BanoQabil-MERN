@@ -17,7 +17,7 @@ const userregister = async (req, res) => {
         return res.status(400).json({ errors: result.array() });
     }
 
-    const { userName, email, password, phoneNumber,avatar } = req.body;
+    const { userName, email, password, phoneNumber } = req.body;
 
     try {
         // Check if user with email already exists
@@ -27,9 +27,9 @@ const userregister = async (req, res) => {
         }
 
         // Check if avatar file is included in the request
-        if (!req.file || !req.file.path) {
-            return res.status(400).json({ msg: "Avatar file is required!" });
-        }
+        // if (!req.file || !req.file.path) {
+        //     return res.status(400).json({ msg: "Avatar file is required!" });
+        // }
 
         // Upload avatar to Cloudinary
         const avatar = await uploadOnCloudinary(req.file.path);
