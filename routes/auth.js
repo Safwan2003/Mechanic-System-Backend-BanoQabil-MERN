@@ -10,16 +10,18 @@ const {check} = require('express-validator')
 const { upload } = require("../middleware/multer.middleware.js");
 
 
-router.post('/userregister',upload.fields([
-    {
-        name: "avatar",
-        maxCount: 1
-    }
+router.post('/userregister',
+            // upload.fields([
+    // {
+        // name: "avatar",
+        // maxCount: 1
+    // }
     // {
     //     name: "coverImage",
     //     maxCount: 1
     // }
-]),[
+// ]),
+    [
 check('userName','Enter your full name').not().isEmpty(),
 check('email','Enter your full email').isEmail(),
 check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
