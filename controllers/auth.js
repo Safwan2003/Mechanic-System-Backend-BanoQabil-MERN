@@ -25,7 +25,7 @@ const userregister =async (req,res) =>{
             }
 
     // cloudinary setup start
-    const avatarLocalPath =  req.files.avatar;
+    const avatarLocalPath =   req.files?.avatar[0]?.path;
     // const coverIamgeLocalPath =   req.files?.coverImage[0]?.path;
         if(!avatarLocalPath){
            return res.status(400).json({msg:"Avatar file localpath is required!"})
