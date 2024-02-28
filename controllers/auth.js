@@ -40,7 +40,7 @@ const userregister =async (req,res) =>{
 
  user = new User({
     userName,
-    avatar:avatar.url,
+    // avatar:avatar.url,
     // coverImage: coverImage?.url || "",
     email,
     password,
