@@ -124,35 +124,20 @@ const mechanicregister =async (req,res) =>{
     if(!result.isEmpty()){
         return res.status(400).json({errors:result.array()})
     } 
-    const {CNIC,name,password,phoneNumber,location,service}=req.body
+    const {CNIC,name,password,phoneNumber,location,service ,avatar , utilityImage}=req.body
+    
+    
+    // Upload avatar to Cloudinary and get the URL
+    const cloudinaryResponse = await uploadOnCloudinary(avatar);
+    const avatarUrl = cloudinaryResponse.secure_url;
+// cloudinary setup end
     
     
     // cloudinary setup start
-    const avatarLocalpath =   req.files?.avatar[0]?.path;
-    // const coverIamgeLocalPath =   req.files?.coverImage[0]?.path;
-        if(!avatarLocalpath){
-           return res.status(400).json({msg:"Avatar file is required!"})
-        }
-        const avatar =  await uploadOnCloudinary(avatarLocalpath);
-        // const coverImage =  await uploadOnCloudinary(coverIamgeLocalPath);
-
-        if(!avatar){
-            return res.status(400).json({msg:"Avatar file is required!"})
-         }
-    // cloudinary setup end
-    
-    
-    // cloudinary setup start
-    const utilityImageLocalPath =   req.files?.utilityImage[0]?.path;
-        if(!utilityImageLocalPath){
-           return res.status(400).json({msg:"utilityImage file is required!"})
-        }
-        const utilityImage =  await uploadOnCloudinary(utilityImageLocalPath);
-
-        if(!utilityImage){
-            return res.status(400).json({msg:"utilityImage file is required!"})
-         }
-    // cloudinary setup end
+     // Upload avatar to Cloudinary and get the URL
+     const cloudinaryResponseUtilityImage = await uploadOnCloudinary(utilityImage);
+     const utilityImageUrl = cloudinaryResponseUtilityImage.secure_url;
+// cloudinary setup end
     
     
     try{
@@ -162,8 +147,8 @@ const mechanicregister =async (req,res) =>{
             }
     mechanic= new Mechanic({
     CNIC,
-    utilityImage:utilityImage.url,
-    avatar:avatar.url,
+    utilityImage:utilityImageUrl,
+    avatar:avatarUrl,
     name,
     password,
     service: service.toLowerCase(), 
