@@ -11,67 +11,63 @@ const { uploadOnCloudinary } = require( '../cloudinary.js');
 
 
 
-const userregister =async (req,res) =>{
-    const result= validationResult(req);
-    if(!result.isEmpty()){
-        return res.status(400).json({errors:result.array()})
-    } 
-    const {userName, email,password,phoneNumber}=req.body
-    
-    try{
-        let user = await User.findOne({email});
-            if(user){
-                return res.status(400).json({msg:'User already exist'})
-            }
-
-    // cloudinary setup start
-    // const avatarLocalPath =   req.files?.avatar[0]?.path;
-    // const coverIamgeLocalPath =   req.files?.coverImage[0]?.path;
-        // if(!avatarLocalPath){
-        //    return res.status(400).json({msg:"Avatar file is required!"})
-        // }
-        // const avatar =  await uploadOnCloudinary(avatarLocalPath);
-        // const coverImage =  await uploadOnCloudinary(coverIamgeLocalPath);
-
-        // if(!avatar){
-        //     return res.status(400).json({msg:"Avatar file is required!"})
-        //  }
-    // cloudinary setup end
-
- user = new User({
-    userName,
-    // avatar:avatar.url,
-    // coverImage: coverImage?.url || "",
-    email,
-    password,
-    phoneNumber
-})
-
-
-const salt =await bcrypt.genSalt(10)
-user.password=await bcrypt.hash(password,salt);
-
-
-await user.save();
-
-const payload={
-    user:{
-        id:user.id,
+const userregister = async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.status(400).json({ errors: result.array() });
     }
-}
 
-jwt.sign(payload,process.env.secretkey,{expiresIn:'2hr'},(err,token)=>{
-    if(err) throw err
-return res.json({token}) 
-})
+    const { userName, email, password, phoneNumber, avatar } = req.body;
 
-}catch(err){
-console.error(err.message)
-res.status(500).json({msg:'server error'})        
-}
-  
-}
+    try {
+        let user = await User.findOne({ email });
+        if (user) {
+            return res.status(400).json({ msg: 'User already exists' });
+        }
+
+        // Upload avatar to Cloudinary and get the URL
+        const cloudinaryResponse = await uploadOnCloudinary(avatar);
+        const avatarUrl = cloudinaryResponse.secure_url;
+
+        user = new User({
+            userName,
+            email,
+            password,
+            phoneNumber,
+            avatar: avatarUrl // Assign the Cloudinary URL to the avatar field
+        });
+
+        // Hash the password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+
+        // Save the user to the database
+        await user.save();
+
+        // Generate JWT token
+        const payload = {
+            user: {
+                id: user.id,
+            }
+        };
+
+        jwt.sign(payload, process.env.secretkey, { expiresIn: '2hr' }, (err, token) => {
+            if (err) throw err;
+            return res.json({ token });
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
+
+
+
+
+
     
+
 
 const userlogin=async(req,res)=>{
 const result = validationResult(req)
