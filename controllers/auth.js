@@ -28,14 +28,14 @@ const userregister =async (req,res) =>{
     // const avatarLocalPath =   req.files?.avatar[0]?.path;
     // const coverIamgeLocalPath =   req.files?.coverImage[0]?.path;
         // if(!avatarLocalPath){
-           // return res.status(400).json({msg:"Avatar file localpath is required!"})
+        //    return res.status(400).json({msg:"Avatar file is required!"})
         // }
         // const avatar =  await uploadOnCloudinary(avatarLocalPath);
         // const coverImage =  await uploadOnCloudinary(coverIamgeLocalPath);
 
         // if(!avatar){
-            // return res.status(400).json({msg:"Avatar file is not found"})
-         }
+        //     return res.status(400).json({msg:"Avatar file is required!"})
+        //  }
     // cloudinary setup end
 
  user = new User({
@@ -69,8 +69,9 @@ return res.json({token})
 console.error(err.message)
 res.status(500).json({msg:'server error'})        
 }
-};
-
+  
+}
+    
 
 const userlogin=async(req,res)=>{
 const result = validationResult(req)
