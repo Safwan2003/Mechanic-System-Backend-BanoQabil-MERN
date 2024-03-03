@@ -43,5 +43,7 @@ Ensure to check the API documentation for detailed information on each endpoint 
 Contributing
 Contributions to the Mechanic System backend are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
 
+For SWAGGER DOCUMENTATIONS VISIT:  https://bewildered-leg-warmers-tuna.cyclic.app/api-docs/
+
 License
 This project is licensed under the ISC License. See the LICENSE file for details.
